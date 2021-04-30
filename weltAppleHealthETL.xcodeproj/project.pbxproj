@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033BAF192638C56D00F17724 /* SleepInBed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033BAF182638C56D00F17724 /* SleepInBed.swift */; };
 		ABADE859262ECE81001D1DC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE858262ECE81001D1DC3 /* AppDelegate.swift */; };
 		ABADE85B262ECE81001D1DC3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE85A262ECE81001D1DC3 /* SceneDelegate.swift */; };
 		ABADE85D262ECE81001D1DC3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE85C262ECE81001D1DC3 /* ViewController.swift */; };
 		ABADE860262ECE81001D1DC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABADE85E262ECE81001D1DC3 /* Main.storyboard */; };
 		ABADE862262ECE81001D1DC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABADE861262ECE81001D1DC3 /* Assets.xcassets */; };
 		ABADE865262ECE81001D1DC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABADE863262ECE81001D1DC3 /* LaunchScreen.storyboard */; };
+		ABADE876262ED52E001D1DC3 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABADE875262ED52E001D1DC3 /* HealthKit.framework */; };
+		ABADE879262EDB70001D1DC3 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE878262EDB70001D1DC3 /* UIAlertController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033BAF182638C56D00F17724 /* SleepInBed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInBed.swift; sourceTree = "<group>"; };
 		ABADE855262ECE81001D1DC3 /* weltAppleHealthETL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weltAppleHealthETL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABADE858262ECE81001D1DC3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABADE85A262ECE81001D1DC3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +28,9 @@
 		ABADE861262ECE81001D1DC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABADE864262ECE81001D1DC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABADE866262ECE81001D1DC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABADE873262ED52E001D1DC3 /* weltAppleHealthETL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = weltAppleHealthETL.entitlements; sourceTree = "<group>"; };
+		ABADE875262ED52E001D1DC3 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		ABADE878262EDB70001D1DC3 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABADE876262ED52E001D1DC3 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +50,7 @@
 			children = (
 				ABADE857262ECE81001D1DC3 /* weltAppleHealthETL */,
 				ABADE856262ECE81001D1DC3 /* Products */,
+				ABADE874262ED52E001D1DC3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +65,8 @@
 		ABADE857262ECE81001D1DC3 /* weltAppleHealthETL */ = {
 			isa = PBXGroup;
 			children = (
+				ABADE873262ED52E001D1DC3 /* weltAppleHealthETL.entitlements */,
+				ABADE878262EDB70001D1DC3 /* UIAlertController+Extension.swift */,
 				ABADE858262ECE81001D1DC3 /* AppDelegate.swift */,
 				ABADE85A262ECE81001D1DC3 /* SceneDelegate.swift */,
 				ABADE85C262ECE81001D1DC3 /* ViewController.swift */,
@@ -63,8 +74,17 @@
 				ABADE861262ECE81001D1DC3 /* Assets.xcassets */,
 				ABADE863262ECE81001D1DC3 /* LaunchScreen.storyboard */,
 				ABADE866262ECE81001D1DC3 /* Info.plist */,
+				033BAF182638C56D00F17724 /* SleepInBed.swift */,
 			);
 			path = weltAppleHealthETL;
+			sourceTree = "<group>";
+		};
+		ABADE874262ED52E001D1DC3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ABADE875262ED52E001D1DC3 /* HealthKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +158,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABADE85D262ECE81001D1DC3 /* ViewController.swift in Sources */,
+				ABADE879262EDB70001D1DC3 /* UIAlertController+Extension.swift in Sources */,
 				ABADE859262ECE81001D1DC3 /* AppDelegate.swift in Sources */,
 				ABADE85B262ECE81001D1DC3 /* SceneDelegate.swift in Sources */,
+				033BAF192638C56D00F17724 /* SleepInBed.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,17 +308,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = weltAppleHealthETL/weltAppleHealthETL.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4YLWWCZ2RV;
+				DEVELOPMENT_TEAM = 36ZV9BS84L;
 				INFOPLIST_FILE = weltAppleHealthETL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sanghyuk.weltAppleHealthETL;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sanghyuk.weltAppleHealthETL2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,17 +328,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = weltAppleHealthETL/weltAppleHealthETL.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4YLWWCZ2RV;
+				DEVELOPMENT_TEAM = 36ZV9BS84L;
 				INFOPLIST_FILE = weltAppleHealthETL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sanghyuk.weltAppleHealthETL;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sanghyuk.weltAppleHealthETL2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

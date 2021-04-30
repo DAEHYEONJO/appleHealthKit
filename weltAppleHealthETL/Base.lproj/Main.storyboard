@@ -1,24 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="weltAppleHealthETL" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="758-7x-fnl">
+                                <rect key="frame" x="32" y="328" width="350" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="x7Y-5i-3Qf"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="HKPermissionCheckAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRA-AD-gb9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTy-px-Mid">
+                                <rect key="frame" x="30" y="266" width="354" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="a21-W2-u1b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hO4-iC-nKv">
+                                <rect key="frame" x="32" y="204" width="350" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="eHZ-8M-MvB"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="getHKPermission:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Re9-De-3Rc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4WH-XD-j4f">
+                                <rect key="frame" x="32" y="433" width="350" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="paD-VL-A5m"/>
+                                </constraints>
+                                <state key="normal" title="Show Data"/>
+                                <connections>
+                                    <action selector="showData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o6e-h6-JqI"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="758-7x-fnl" secondAttribute="trailing" constant="32" id="3aq-fw-QEu"/>
+                            <constraint firstItem="hO4-iC-nKv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="160" id="7Bt-Ur-fUj"/>
+                            <constraint firstItem="4WH-XD-j4f" firstAttribute="width" secondItem="758-7x-fnl" secondAttribute="width" id="Ahu-gf-n1l"/>
+                            <constraint firstItem="4WH-XD-j4f" firstAttribute="height" secondItem="758-7x-fnl" secondAttribute="height" id="BJF-8c-lSG"/>
+                            <constraint firstItem="4WH-XD-j4f" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="KNI-By-nwX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MTy-px-Mid" secondAttribute="trailing" constant="30" id="NM5-5v-bzQ"/>
+                            <constraint firstItem="hO4-iC-nKv" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="T36-TP-Zb6"/>
+                            <constraint firstItem="758-7x-fnl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Ul5-jQ-8JI"/>
+                            <constraint firstItem="758-7x-fnl" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cge-GC-Fn2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hO4-iC-nKv" secondAttribute="trailing" constant="32" id="ixb-4B-jPC"/>
+                            <constraint firstItem="MTy-px-Mid" firstAttribute="top" secondItem="hO4-iC-nKv" secondAttribute="bottom" constant="32" id="l5o-2g-SzQ"/>
+                            <constraint firstItem="MTy-px-Mid" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ot5-vV-b5z"/>
+                            <constraint firstItem="MTy-px-Mid" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="qz3-vM-Nhl"/>
+                            <constraint firstItem="4WH-XD-j4f" firstAttribute="top" secondItem="758-7x-fnl" secondAttribute="bottom" constant="75" id="sYg-ww-5Pg"/>
+                            <constraint firstItem="hO4-iC-nKv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="tH6-UE-TeZ"/>
+                            <constraint firstItem="758-7x-fnl" firstAttribute="top" secondItem="MTy-px-Mid" secondAttribute="bottom" constant="32" id="uBf-Jh-CHo"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="HKPermissionCheckButton" destination="758-7x-fnl" id="QjZ-pL-3FT"/>
+                        <outlet property="getHKPermissionButton" destination="hO4-iC-nKv" id="OBq-KO-r6T"/>
+                        <outlet property="resultLabel" destination="MTy-px-Mid" id="pfJ-kd-bXm"/>
+                        <outlet property="showDataButton" destination="4WH-XD-j4f" id="pJ8-eW-Q7U"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-210" y="137"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
