@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		033BAF192638C56D00F17724 /* SleepInBed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033BAF182638C56D00F17724 /* SleepInBed.swift */; };
+		03BF9C712646A5CC00A440F0 /* SleepAsleep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF9C702646A5CC00A440F0 /* SleepAsleep.swift */; };
+		03BF9C742646A5E900A440F0 /* SleepAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF9C732646A5E900A440F0 /* SleepAnalysis.swift */; };
+		03F29376264F1DED00E98A81 /* AnalysisController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F29375264F1DED00E98A81 /* AnalysisController.swift */; };
+		03F29379264F35A900E98A81 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F29378264F35A900E98A81 /* TableViewCell.swift */; };
 		ABADE859262ECE81001D1DC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE858262ECE81001D1DC3 /* AppDelegate.swift */; };
 		ABADE85B262ECE81001D1DC3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE85A262ECE81001D1DC3 /* SceneDelegate.swift */; };
 		ABADE85D262ECE81001D1DC3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADE85C262ECE81001D1DC3 /* ViewController.swift */; };
@@ -20,6 +24,10 @@
 
 /* Begin PBXFileReference section */
 		033BAF182638C56D00F17724 /* SleepInBed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInBed.swift; sourceTree = "<group>"; };
+		03BF9C702646A5CC00A440F0 /* SleepAsleep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepAsleep.swift; sourceTree = "<group>"; };
+		03BF9C732646A5E900A440F0 /* SleepAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepAnalysis.swift; sourceTree = "<group>"; };
+		03F29375264F1DED00E98A81 /* AnalysisController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisController.swift; sourceTree = "<group>"; };
+		03F29378264F35A900E98A81 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		ABADE855262ECE81001D1DC3 /* weltAppleHealthETL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weltAppleHealthETL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABADE858262ECE81001D1DC3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABADE85A262ECE81001D1DC3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +83,10 @@
 				ABADE863262ECE81001D1DC3 /* LaunchScreen.storyboard */,
 				ABADE866262ECE81001D1DC3 /* Info.plist */,
 				033BAF182638C56D00F17724 /* SleepInBed.swift */,
+				03BF9C702646A5CC00A440F0 /* SleepAsleep.swift */,
+				03BF9C732646A5E900A440F0 /* SleepAnalysis.swift */,
+				03F29375264F1DED00E98A81 /* AnalysisController.swift */,
+				03F29378264F35A900E98A81 /* TableViewCell.swift */,
 			);
 			path = weltAppleHealthETL;
 			sourceTree = "<group>";
@@ -159,9 +171,13 @@
 			files = (
 				ABADE85D262ECE81001D1DC3 /* ViewController.swift in Sources */,
 				ABADE879262EDB70001D1DC3 /* UIAlertController+Extension.swift in Sources */,
+				03BF9C742646A5E900A440F0 /* SleepAnalysis.swift in Sources */,
+				03F29379264F35A900E98A81 /* TableViewCell.swift in Sources */,
+				03F29376264F1DED00E98A81 /* AnalysisController.swift in Sources */,
 				ABADE859262ECE81001D1DC3 /* AppDelegate.swift in Sources */,
 				ABADE85B262ECE81001D1DC3 /* SceneDelegate.swift in Sources */,
 				033BAF192638C56D00F17724 /* SleepInBed.swift in Sources */,
+				03BF9C712646A5CC00A440F0 /* SleepAsleep.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
