@@ -8,6 +8,9 @@
 import UIKit
 import HealthKit
 
+import Foundation
+	
+
 class ViewController: UIViewController {
     
     //MARK: - Variable
@@ -17,6 +20,16 @@ class ViewController: UIViewController {
     var analysisList = [SleepAnalysis]()//최종 sleep 저장할 리스트
     var oneDayInbedList = [SleepInBed]()
     var oneDayAsleepList = [SleepAsleep]()
+    var user = User()
+    
+    var asleepTemp = [SleepAsleep]()
+    var asleepPost = [AsleepPost]()
+    var sleepPost = [SleepPost]()
+    
+    let userURL = "https://api-prod.weltcorp.com/welt-i/v1/healthkit/users"
+    let asleepURL = "https://api-prod.weltcorp.com/welt-i/v1/healthkit/asleeps/users/32"
+    let inbedURL = "https://api-prod.weltcorp.com/welt-i/v1/healthkit/inbeds/users/32"
+    let sleepURL = "https://api-prod.weltcorp.com/welt-i/v1/healthkit/sleeps/users/32"
     
     //MARK: - Outlet
     @IBOutlet weak var resultLabel: UILabel!
@@ -24,6 +37,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var HKPermissionCheckButton: UIButton!
     @IBOutlet weak var showDataButton: UIButton!
     @IBOutlet weak var goToAnalysisBtn: UIButton!
+    @IBOutlet weak var sleepChartBtn: UIButton!
+    @IBOutlet weak var seChartBtn: UIButton!
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,13 +156,51 @@ class ViewController: UIViewController {
 //            //push controller -> navi
 //            self.navigationController?.pushViewController(controller, animated: true)
 //        }
-        
-        
-        
     }
-    
+    @IBAction func moveSleepChart(_ sender: Any) {
+        guard let vc = storyboard?.instantiateViewController(identifier: "ChartController") as? ChartController else {return}
+        vc.analysisList = self.analysisList
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    @IBAction func moveSEChart(_ sender: Any) {
+        guard let vc = storyboard?.instantiateViewController(identifier: "SEChartController") as? SEChartController else {return}
+        vc.analysisList = self.analysisList
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     //TODO: - Health Kit을 이용하여 Sleep Analysis 권한으로 가져올 수 있는 데이터 Query 로 가져오기
     //TODO: - Health Kit에 Sleep Analysis 외 다른 권한을 요청하고, Query 로 데이터 가져오기
+    
+
+    
+    func postToServer(parameters : String, url : String){
+
+        let semaphore = DispatchSemaphore (value: 0)
+
+        let postData = parameters.data(using: .utf8)
+
+        var request = URLRequest(url: URL(string: url)!,timeoutInterval: Double.infinity)
+        request.addValue("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyMDg3NDkyNSwiZXhwIjoxODAwODc0OTI1LCJ0eXBlIjoiYWNjZXNzIn0.6VD5ZJPWGlgzKj8AKND8dllxmnOl4qFlD8WUac7NlMY", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            semaphore.signal()
+            
+            return
+          }
+            print("postToServer()")
+          print(String(data: data, encoding: .utf8)!)
+          semaphore.signal()
+        }
+
+        task.resume()
+        semaphore.wait()
+
+    }
     
     func calcEffeciency(){
         let dateFormatter = DateFormatter()
@@ -209,7 +262,7 @@ class ViewController: UIViewController {
                 let dateString5 = dateFormatter.string(from: inbedList[index].startDate)//한국시간으로 변경
                 let dateString6 = dateFormatter.string(from: inbedList[index].endDate)//한국시간으로 변경
                 print("temp : \(dateString5) end : \(dateString6) interval : \(inbedList[index].sleepTimeForOneDay)")
-                
+                sum = 0
             }
             index+=1
         }
@@ -227,7 +280,7 @@ class ViewController: UIViewController {
             print("\(dateString5) ~ \(dateString6) : \(i.sleepTimeForOneDay)")
         }
         
-        var asleepTemp = [SleepAsleep]()
+        
         var asleepIndex = 0
         for i in 0 ..< oneDayInbedList.count{
             print("--------------------inbed & asleep find same day-------------------------")
@@ -305,6 +358,7 @@ class ViewController: UIViewController {
                     let se = Double(analysis2)/dse
                     print("se : \(se)")
                     analysisList.append(SleepAnalysis(inbed: oneDayInbedList[i], asleepList: asleepTemp, tib: Int(oneDayInbedList[i].sleepTimeForOneDay), tst: analysis2, sol: analysis6, tasafa: analysis4, frequncy: sameIndex-1, waso: isum ,eff: se))
+                   
                 }
                 asleepIndex += 1
             }
@@ -318,8 +372,45 @@ class ViewController: UIViewController {
             for j in i.sleepAsleepList{
                 let ds3 = dateFormatter.string(from: j.startDate)//한국시간으로 변경
                 let ds4 = dateFormatter.string(from: j.endDate)//한국시간으로 변경
+                asleepPost.append(AsleepPost(d: String(ds3.split(separator: " ").first!), s: ds3, e: ds4))
+                
+                //----------------------------------------------//----------------------------------------------
+                let encoder : JSONEncoder = JSONEncoder()
+                encoder.outputFormatting = .prettyPrinted
+                var returnValue : String = ""
+                
+                do {
+                    let jsonData : Data = try encoder.encode(asleepPost.last)
+                    if let jsonString = String(data: jsonData, encoding: .utf8){
+                        returnValue = jsonString
+                        print(returnValue)
+                    }
+                } catch {
+                    print(error)
+                }
+
+                //postToServer(parameters: returnValue, url: asleepURL)
+                
+
+                //----------------------------------------------//----------------------------------------------
                 print("asleep : \(ds3) ~ \(ds4) interval : \(j.sleepTimeForOneDay) s")
             }
+            sleepPost.append(SleepPost(date: String(ds1.split(separator: " ").first!), tib: i.TIB, tst: i.TST, sol: i.SOL, tasafa: i.TASAFA, freqWake: i.frequencyWakeUp, waso: i.WASO, se: i.sleepEfficiency))
+            
+            let encoder : JSONEncoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            var returnValue2 : String = ""
+            
+            do {
+                let jsonData : Data = try encoder.encode(sleepPost.last)
+                if let jsonString = String(data: jsonData, encoding: .utf8){
+                    returnValue2 = jsonString
+                    print(returnValue2)
+                }
+            } catch {
+                print(error)
+            }
+            //postToServer(parameters: returnValue2, url: sleepURL)
             print("불끄고 잠들때까지(SOL) : \(i.SOL)")
             print("완전히 깼는데 침대에 누워있던 시간(TASAFA) : \(i.TASAFA) s")
             print("중간에 깼다가 잠들때 까지 걸린 시간 합(WASO) : \(i.WASO) s")
@@ -328,6 +419,10 @@ class ViewController: UIViewController {
             print("중간에 깬 횟수(frequencyWakeUp) : \(i.frequencyWakeUp) 번")
             print("수면효율[ TST/(SOL + TST + WASO + TASAFA) ] : \(i.sleepEfficiency * 100) %")
             showToast(message: "Request Complete")
+        }
+        
+        for ast in asleepTemp {
+            print("asleep Temp : \(ast.startDate)")
         }
     }
     
@@ -353,6 +448,12 @@ class ViewController: UIViewController {
 
     
     @IBAction func showData(_ sender: Any) {
+         
+        inbedList.removeAll()
+        asleepList.removeAll()
+        analysisList.removeAll()
+        oneDayInbedList.removeAll()
+        oneDayAsleepList.removeAll()
         
         print("ㅇㅇ")
         let calendar = NSCalendar.current
@@ -394,9 +495,9 @@ class ViewController: UIViewController {
                             print("asleep time")
                             self.asleepList.append(SleepAsleep(startDate,endDate,sleepTimeForOneDay))
                         }
-                        print("start date : \(startDate)")
-                        print("endDate date : \(endDate)")
-                        print("interval : \(sleepTimeForOneDay)")
+                        //print("start date : \(startDate)")
+                        //print("endDate date : \(endDate)")
+                        //print("interval : \(sleepTimeForOneDay)")
                     }
                 }
             }
@@ -434,15 +535,14 @@ class ViewController: UIViewController {
         for i in 1 ... 300{
             guard let start=Calendar.current.date(byAdding: .day, value: i, to: date) else {return}
             guard let end = Calendar.current.date(byAdding: .day, value: i+1, to: date) else {return}
-            print("start \(start) end \(end)")
+            //print("start \(start) end \(end)")
+            let s1 = dateFormatter.string(from: start)//한국시간으로 변경
+            let e1 = dateFormatter.string(from: end)//한국시간으로 변경
             let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: [])
             let query = HKStatisticsQuery(quantityType: stepType, quantitySamplePredicate: predicate, options: .cumulativeSum){ query, results, error in
                 if let result = results{
                     let sum = result.sumQuantity()
                     guard let total = sum?.doubleValue(for: HKUnit.count()) else {return}
-                    print(start)
-                    print(end)
-                    print(total)
                 }
             }
             
@@ -454,7 +554,10 @@ class ViewController: UIViewController {
                     return
                 } else if let quantity = statistics?.sumQuantity(){
                     value = quantity.doubleValue(for: HKUnit.meter())
-                    print("distanceWalkingRunnig : \(value/1000)")
+                    print("start date : \(s1)")
+                    print("걷고 달린 거리 : \(value/1000)")
+                    print("end date : \(e1)")
+                    print("---------------------------------\n")
                 }
                 
             }
@@ -467,9 +570,11 @@ class ViewController: UIViewController {
                     return
                 }else if let quantity = statistics?.sumQuantity(){
                     value = quantity.doubleValue(for: HKUnit.largeCalorie())
-                    print(start)
-                    print("cal : \(value)")
-                    print(end)
+                    
+                    print("start date : \(s1)")
+                    print("칼로리소모량 : \(value)")
+                    print("end date : \(e1)")
+                    print("---------------------------------\n")
                     
                 }
             }
@@ -480,15 +585,17 @@ class ViewController: UIViewController {
                 guard error == nil else { print("error"); return }
                 
                 for (_, sample) in results!.enumerated() {
-                        guard let currData:HKQuantitySample = sample as? HKQuantitySample else { return }
-                        print("Heart Rate: \(currData.quantity.doubleValue(for: HKUnit(from: "count/min")))")
-                        print("Start Date: \(currData.startDate)")
-                        print("End Date: \(currData.endDate)")
-                        print("---------------------------------\n")
+                    guard let currData:HKQuantitySample = sample as? HKQuantitySample else { return }
+                    let s = dateFormatter.string(from: currData.startDate)//한국시간으로 변경
+                    let e = dateFormatter.string(from: currData.endDate)//한국시간으로 변경
+                    print("심박수: \(currData.quantity.doubleValue(for: HKUnit(from: "count/min")))")
+                    print("Start Date: \(s)")
+                    print("End Date: \(e)")
+                    print("---------------------------------\n")
                     }
                 
             }
-            //healthStore.execute(heartRateQuery)
+            healthStore.execute(heartRateQuery)
             
             let walkingStepLengthQuery = HKSampleQuery(sampleType: walkingStepLength, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: []) {
                 (query, results, error) in
@@ -496,9 +603,11 @@ class ViewController: UIViewController {
                 
                 for (_, sample) in results!.enumerated() {
                     guard let currData:HKQuantitySample = sample as? HKQuantitySample else { return }
-                    print("walkingStepLength : \(currData.quantity.doubleValue(for: HKUnit.meter()))")
-                    print("Start Date: \(currData.startDate)")
-                    print("End Date: \(currData.endDate)")
+                    let s = dateFormatter.string(from: currData.startDate)//한국시간으로 변경
+                    let e = dateFormatter.string(from: currData.endDate)//한국시간으로 변경
+                    print("보폭 : \(currData.quantity.doubleValue(for: HKUnit.meter()))")
+                    print("Start Date: \(s)")
+                    print("End Date: \(e)")
                     print("---------------------------------\n")
                 }
                
@@ -510,49 +619,109 @@ class ViewController: UIViewController {
                 guard error == nil else { print("walking Speed Query error"); return }
                 
                 for (_, sample) in results!.enumerated() {
+                    
                     guard let currData:HKQuantitySample = sample as? HKQuantitySample else { return }
-                    print("walkingSpeed : \(currData.quantity.doubleValue(for: HKUnit(from: "m/s")))")
-                    print("Start Date: \(currData.startDate)")
-                    print("End Date: \(currData.endDate)")
+                    let s = dateFormatter.string(from: currData.startDate)//한국시간으로 변경
+                    let e = dateFormatter.string(from: currData.endDate)//한국시간으로 변경
+                    print("보행속도 : \(currData.quantity.doubleValue(for: HKUnit(from: "m/s")))")
+                    print("Start Date: \(s)")
+                    print("End Date: \(e)")
                     print("---------------------------------\n")
                 }
             }
             //healthStore.execute(walkingSpeedQuery)
-            
+        
             let walkingDoubleSupportPercentageQuery = HKSampleQuery(sampleType: walkingDoubleSupportPercentage, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: []){
                 (query, results, error) in
                 guard error == nil else { print("walking Double Support Percentage Query error"); return }
                 
                 for (_, sample) in results!.enumerated() {
+                    
                     guard let currData:HKQuantitySample = sample as? HKQuantitySample else { return }
-                    print("walkingDoubleSupportPercentage : \(currData.quantity.doubleValue(for: HKUnit.percent()))")
-                    print("Start Date: \(currData.startDate)")
-                    print("End Date: \(currData.endDate)")
-                    print("---------------------------------\n")
+                    let s = dateFormatter.string(from: currData.startDate)//한국시간으로 변경
+                    let e = dateFormatter.string(from: currData.endDate)//한국시간으로 변경
+                    //print("이중지지시간 : \(currData.quantity.doubleValue(for: HKUnit.percent()))")
+                    //print("Start Date: \(s)")
+                    //print("End Date: \(e)")
+                    //print("---------------------------------\n")
+                   
+                    //print("device name : \(sample.sourceRevision.source.name)")
+                    //print("bundle : \(sample.sourceRevision.source.bundleIdentifier)")
+                    guard let deviceType = sample.device?.name else {return}
+                    //print("device type : \(deviceType)")
+                    self.user = User(id:sample.sourceRevision.source.name, device: deviceType)
+                
                 }
+                
             }
             healthStore.execute(walkingDoubleSupportPercentageQuery)
         }
         
+
         guard let stepCountType = HKObjectType.quantityType(forIdentifier: .stepCount) else {return}
         let Source = HKSourceQuery(sampleType: stepCountType, samplePredicate: nil){(query, sourcesOrNil, errorOrNil) in
-            
-            guard let sources = sourcesOrNil else {
-                return
-            }
-            
-            for source in sources {
-                print(source.name)
+            guard let sources = sourcesOrNil else { return}
                 
+            for s in sources {
+                print(s.name)
+                print(s)
             }
-            
+                   
         }
         healthStore.execute(Source)
         
         calcEffeciency()
+        //print(encodeToJson())
+        changeToInbedPost()
+        //postToServer(parameters: encodeToJson(), url: userURL)
+
+       
         
     }
     
+    func changeToInbedPost() {
+        let encoder : JSONEncoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        var returnValue : String = ""
+        
+        var inbedPost = [InbedPost]()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        for i in oneDayInbedList {
+            let startTime = dateFormatter.string(from: i.startDate)//한국시간으로 변경
+            let endTime = dateFormatter.string(from: i.endDate)
+            let date = startTime.split(separator: " ").first!
+            print("한국날짜 : \(date)")
+            inbedPost.append(InbedPost(date: String(date), s: startTime, e: endTime))
+            
+            do {
+                let jsonData : Data = try encoder.encode(inbedPost.last)
+                if let jsonString = String(data: jsonData, encoding: .utf8){
+                    returnValue = jsonString
+                    print("inbed json \(returnValue)")
+                }
+            } catch {
+                print(error)
+            }
+            //postToServer(parameters: returnValue, url: inbedURL)
+        }
+      
+    }
+    
+    func encodeToJson() -> String {
+        let encoder : JSONEncoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        var returnValue : String = ""
+        do {
+            let jsonData : Data = try encoder.encode(user)
+            if let jsonString = String(data: jsonData, encoding: .utf8){
+                returnValue = jsonString
+            }
+        } catch {
+            print(error)
+        }
+        return returnValue
+    }
     
 }
 
